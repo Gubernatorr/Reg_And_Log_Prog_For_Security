@@ -102,9 +102,9 @@ public class Reg_Window_Controller {
 
             if (isLoginTaken && isEmailTaken) {
 
-                login_check_text.setText("Користувач з таким іменем вже існує");
+                login_check_text.setText("A user with that name already exists");
                 login_check_text.setFill(Color.RED);
-                email_check_text.setText("Користувач з такою поштою вже існує");
+                email_check_text.setText("A user with this email already exists");
                 email_check_text.setFill(Color.RED);
 
                 Shake userLogin = new Shake(login_field);
@@ -119,7 +119,7 @@ public class Reg_Window_Controller {
 
             } else if (isLoginTaken) {
 
-                login_check_text.setText("Користувач з таким іменем вже існує");
+                login_check_text.setText("A user with that name already exists");
                 login_check_text.setFill(Color.RED);
 
                 Shake userLogin = new Shake(login_field);
@@ -127,13 +127,23 @@ public class Reg_Window_Controller {
 
             } else if (isEmailTaken) {
 
-                email_check_text.setText("Користувач з такою поштою вже існує");
+                email_check_text.setText("A user with this email already exists");
                 email_check_text.setFill(Color.RED);
 
                 Shake userEmail = new Shake(email_field);
                 userEmail.playAnim();
 
+            } else if(!email_field.getText().endsWith("@gmail.com")){
+
+                email_check_text.setFill(Color.RED);
+                email_check_text.setText("Email must ends with @gmail.com");
+
             } else if(isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar){
+
+                login_check_text.setFill(Color.GREEN);
+                login_check_text.setText("Login is valid");
+                email_check_text.setFill(Color.GREEN);
+                email_check_text.setText("Email is valid");
 
                 User inserted_user = new User();
 
@@ -212,14 +222,22 @@ public class Reg_Window_Controller {
 
             if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
                 password_check_text.setFill(Color.GREEN);
-                password_check_text.setText("Пароль відповідає умовам.");
+                password_check_text.setText("Password is valid");
             } else {
                 password_check_text.setFill(Color.RED);
-                password_check_text.setText("Пароль не відповідає умовам.");
+                password_check_text.setText("Password is not valid");
             }
         });
 
-        
+        email_field.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.endsWith("@gmail.com")) {
+                email_check_text.setFill(Color.GREEN);
+                email_check_text.setText("Email is valid");
+            } else {
+                email_check_text.setFill(Color.RED);
+                email_check_text.setText("Email is not valid");
+            }
+        });
     }
 
 }
