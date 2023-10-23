@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reg_and_log_prog_for_security.controllers.Reg_Window_Controller">
+    <children>
+        <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="59.0" prefWidth="1538.0" style="-fx-background-color: #483D8B; -fx-background-radius: 0;">
+            <children>
+                <Text fill="WHITE" layoutX="741.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAPTCHA">
+                    <font>
+                        <Font name="Comic Sans MS" size="24.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+        <Button fx:id="reg_button" layoutX="727.0" layoutY="707.0" mnemonicParsing="false" onAction="#reg_button_pressed" prefHeight="50.0" prefWidth="135.0" style="-fx-background-radius: 0; -fx-background-color: #66CDAA;" text="Registration" textFill="WHITE">
+            <font>
+                <Font name="Marlett" size="20.0" />
+            </font>
+        </Button>
+      <Text layoutX="679.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Window">
+         <font>
+            <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="690.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account">
+         <font>
+            <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="login_field" layoutX="588.0" layoutY="249.0" prefHeight="53.0" prefWidth="422.0" promptText="Login">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="email_field" layoutX="588.0" layoutY="338.0" prefHeight="53.0" prefWidth="422.0" promptText="Email">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="password_field" layoutX="588.0" layoutY="428.0" prefHeight="53.0" prefWidth="422.0" promptText="Password">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Button fx:id="goback_button" layoutX="1132.0" layoutY="107.0" mnemonicParsing="false" onAction="#goback_button_pressed" prefHeight="50.0" prefWidth="135.0" style="-fx-background-radius: 0; -fx-background-color: #66CDAA;" text="Go back" textFill="WHITE">
+         <font>
+            <Font name="Marlett" size="20.0" />
+         </font>
+      </Button>
+      <Text fx:id="password_check_text" layoutX="588.0" layoutY="501.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create strong password" wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="email_check_text" layoutX="588.0" layoutY="411.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Input your email" wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="login_check_text" layoutX="588.0" layoutY="322.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your login" wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="password_length_text" layoutX="588.0" layoutY="535.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must be at least 8 characters long." wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="password_upper_and_lower_check_text" layoutX="588.0" layoutY="562.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must include upper and lower case letters." wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="password_number_check_text" layoutX="588.0" layoutY="589.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a number." wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="password_symbol_check_text" layoutX="588.0" layoutY="616.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a symbol (not a letter or a number)." wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>
