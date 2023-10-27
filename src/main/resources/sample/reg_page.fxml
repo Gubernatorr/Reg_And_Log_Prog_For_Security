@@ -18,7 +18,7 @@
                 </Text>
             </children>
         </Pane>
-        <Button fx:id="reg_button" layoutX="727.0" layoutY="707.0" mnemonicParsing="false" onAction="#reg_button_pressed" prefHeight="50.0" prefWidth="135.0" style="-fx-background-radius: 0; -fx-background-color: #66CDAA;" text="Registration" textFill="WHITE">
+        <Button fx:id="reg_button" layoutX="725.0" layoutY="697.0" mnemonicParsing="false" onAction="#reg_button_pressed" prefHeight="50.0" prefWidth="135.0" style="-fx-background-radius: 0; -fx-background-color: #66CDAA;" text="Registration" textFill="WHITE">
             <font>
                 <Font name="Marlett" size="20.0" />
             </font>

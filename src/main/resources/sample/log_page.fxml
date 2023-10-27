@@ -39,12 +39,17 @@
             <Font name="Marlett" size="20.0" />
          </font>
       </Button>
-      <PasswordField fx:id="password_field" layoutX="587.0" layoutY="347.0" prefHeight="54.0" prefWidth="422.0" promptText="Password">
+      <PasswordField fx:id="password_field" layoutX="587.0" layoutY="356.0" prefHeight="54.0" prefWidth="422.0" promptText="Password">
          <font>
             <Font size="24.0" />
          </font>
       </PasswordField>
-      <Text fx:id="password_check_text" layoutX="587.0" layoutY="427.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="422.4000000000001">
+      <Text fx:id="password_check_text" layoutX="587.0" layoutY="432.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="You have 3 attempts to login" wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="587.0" layoutY="340.0" opacity="0.45" strokeType="OUTSIDE" strokeWidth="0.0" text="Input your login here">
          <font>
             <Font size="18.0" />
          </font>

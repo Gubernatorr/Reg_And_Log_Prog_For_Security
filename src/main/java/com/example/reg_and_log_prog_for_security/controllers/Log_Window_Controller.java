@@ -6,6 +6,8 @@ import java.net.URL;
 //import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.example.reg_and_log_prog_for_security.animations.Shake;
@@ -18,7 +20,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Log_Window_Controller {
@@ -35,34 +42,21 @@ public class Log_Window_Controller {
     @FXML
     private Button reg_button;
 
+    private int failedLoginAttempts = 0;
+    private long blockedTime = 0;
+
     @FXML
     void reg_button_pressed(ActionEvent event) {
         openNewScene(reg_button, "/sample/reg_page.fxml");
     }
-
-    @FXML
-    void log_button_pressed(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        String loginText = login_field.getText().trim();
-        String loginPassword = password_field.getText().trim();
-
-        if(!loginText.equals("") && !loginPassword.equals("")){
-            System.out.println("All's good!");
-            //loginUser(loginText, loginPassword);
-        }else{
-            System.out.println("Fields are empty!");
-            Shake userLoginAnima = new Shake(login_field);
-            Shake userPasswordAnima = new Shake(password_field);
-            userLoginAnima.playAnim();
-            userPasswordAnima.playAnim();
-        }
-    }
-
     @FXML
     private TextField login_field;
 
     @FXML
     private PasswordField password_field;
+
+    @FXML
+    private Text password_check_text;
 
     public void openNewScene(Button button, String window){
         button.getScene().getWindow().hide();
@@ -82,35 +76,81 @@ public class Log_Window_Controller {
         stage.show();
     }
 
+    @FXML
+    void log_button_pressed(ActionEvent event) throws SQLException, ClassNotFoundException {
+        if (isUserBlocked()) {
+            modalWindow();
+        }
+
+        String loginText = login_field.getText().trim();
+        String loginPassword = password_field.getText().trim();
+
+        if (!loginText.equals("") && !loginPassword.equals("")) {
+            System.out.println("All's good!");
+            loginUser(loginText, loginPassword);
+        } else {
+            System.out.println("Fields are empty!");
+            Shake userLoginAnima = new Shake(login_field);
+            Shake userPasswordAnima = new Shake(password_field);
+            userLoginAnima.playAnim();
+            userPasswordAnima.playAnim();
+        }
+    }
+    private boolean isUserBlocked() {
+        if (failedLoginAttempts >= 3) {
+            long currentTime = System.currentTimeMillis();
+            if (blockedTime == 0) {
+                // Перший раз користувач заблокований, встановіть час блокування
+                blockedTime = currentTime + 15000; // 15 секунд блокування
+            } else if (currentTime >= blockedTime) {
+                // За минуло 15 секунд, розблокувати користувача
+                failedLoginAttempts = 0;
+                blockedTime = 0;
+            }
+        }
+        return failedLoginAttempts >= 3;
+    }
     private void loginUser(String loginText, String loginPassword) throws SQLException, ClassNotFoundException {
         DatabaseDispatcher dbDispatcher = new DatabaseDispatcher();
 
-        User user = new User();
+        if (loginText != null && loginPassword != null) {
+            if(!dbDispatcher.isUserLoginExists(login_field.getText())){
 
-        if(loginText != null && loginPassword != null){
-            user.setLogin(loginText);
-            user.setPassword(loginPassword);
+                notSuchUserFoundWindow();
+            } else if(dbDispatcher.isUserLoginExists(login_field.getText())){
+                User user_for_sec = dbDispatcher.getAllUserInfo(login_field.getText());
+                if(Objects.equals(user_for_sec.getPassword(), password_field.getText())){
+                    // Успішний вхід, скинути лічильник невдалих спроб
+                    failedLoginAttempts = 0;
+                    blockedTime = 0;
+                    openNewScene(log_button, "/sample/success_page.fxml");
+                }else {
+                    // Невдалий вхід, збільшити лічильник невдалих спроб
+                    failedLoginAttempts++;
+                    switch (failedLoginAttempts) {
+                        case 1 -> {
+                            password_check_text.setText("You have 2 more attempts");
+                            password_check_text.setFill(Color.RED);
+                        }
+                        case 2 -> {
+                            password_check_text.setText("You have 1 more attempts");
+                            password_check_text.setFill(Color.RED);
+                        }
+                        case 3 -> {
+                            password_check_text.setText("You were blocked for 15sec");
+                            password_check_text.setFill(Color.RED);
+                            blockedTime = System.currentTimeMillis() + 15000;
+                        }
+                        default -> System.out.println("Smth wrong with the input type or smth!");
+                    }
 
-            ResultSet rs = dbDispatcher.getUser(user);
-
-            int counter = 0;
-
-            while(rs.next()){
-                counter++;
+                    Shake userLoginAnima = new Shake(login_field);
+                    Shake userPasswordAnima = new Shake(password_field);
+                    userLoginAnima.playAnim();
+                    userPasswordAnima.playAnim();
+                }
             }
-
-            if(counter >= 1){
-                User userOut = dbDispatcher.getAllUserInfo(user);
-
-                openNewScene(log_button, "/sample/success_page.fxml");
-
-            } else {
-                Shake userLoginAnima = new Shake(login_field);
-                Shake userPasswordAnima = new Shake(password_field);
-                userLoginAnima.playAnim();
-                userPasswordAnima.playAnim();
-            }
-        }else{
+        } else {
             Shake userLoginAnima = new Shake(login_field);
             Shake userPasswordAnima = new Shake(password_field);
             userLoginAnima.playAnim();
@@ -118,6 +158,68 @@ public class Log_Window_Controller {
         }
     }
 
+    public void notSuchUserFoundWindow() {
+        Stage window = new Stage();
+        window.setTitle("Alert");
+
+        TextArea txt = new TextArea("There are no users with that kind of login. "+"\n"
+                +"Do you wont to create an Account?");
+        txt.setPrefWidth(325);
+        txt.setPrefHeight(150);
+
+        window.initModality(Modality.APPLICATION_MODAL);
+
+        Pane pane = new Pane();
+
+        Button btn1 = new Button("Close");
+        btn1.setLayoutX(40);
+        btn1.setLayoutY(100);
+
+        btn1.setOnAction(event -> window.close());
+
+        Button btn2 = new Button("Register");
+        btn2.setLayoutX(200);
+        btn2.setLayoutY(100);
+
+        btn2.setOnAction(event -> {
+            openNewScene(reg_button, "/sample/reg_page.fxml");
+        });
+
+
+        pane.getChildren().addAll(txt);
+        pane.getChildren().addAll(btn1);
+        pane.getChildren().addAll(btn2);
+
+        Scene scene = new Scene(pane, 325, 150);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+    public void modalWindow() {
+        Stage window = new Stage();
+        window.setTitle("Alert");
+
+        TextArea txt = new TextArea("You have tried to enter an incorrect password more than 3 " +
+                "\n" + "times. You have been blocked for 15 seconds");
+        txt.setPrefWidth(325);
+        txt.setPrefHeight(150);
+
+        window.initModality(Modality.APPLICATION_MODAL);
+
+        Pane pane = new Pane();
+
+        Button btn1 = new Button("Close");
+        btn1.setLayoutX(140);
+        btn1.setLayoutY(100);
+
+        btn1.setOnAction(event -> window.close());
+
+        pane.getChildren().addAll(txt);
+        pane.getChildren().addAll(btn1);
+
+        Scene scene = new Scene(pane, 325, 150);
+        window.setScene(scene);
+        window.showAndWait();
+    }
     @FXML
     void initialize() {
 

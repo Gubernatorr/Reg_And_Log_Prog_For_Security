@@ -62,24 +62,24 @@ public class DatabaseDispatcher extends Configs{
 
     }
 
-    public User getAllUserInfo(User user) throws SQLException, ClassNotFoundException {
-        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=? AND " + Const.USER_PASSWORD + "=?";
+    public User getAllUserInfo(String user_login) throws SQLException, ClassNotFoundException {
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + " = ?";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(select);
-        preparedStatement.setString(1, user.getLogin());
-        preparedStatement.setString(2, user.getPassword());
+        preparedStatement.setString(1, user_login); // Встановлюємо значення логіну
 
         ResultSet resultSet = preparedStatement.executeQuery();
         User userOut = new User();
-        while (resultSet.next()) {
-            userOut.setId(resultSet.getString(1));
-            userOut.setLogin(resultSet.getString(2));
-            userOut.setEmail(resultSet.getString(3));
-            userOut.setPassword(resultSet.getString(4));
+        if (resultSet.next()) {
+            userOut.setId(resultSet.getString(Const.USER_ID));
+            userOut.setLogin(resultSet.getString(Const.USER_LOGIN));
+            userOut.setEmail(resultSet.getString(Const.USER_EMAIL));
+            userOut.setPassword(resultSet.getString(Const.USER_PASSWORD));
         }
 
         return userOut;
     }
+
 
     public void deleteUser(User user){
         String delete = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_ID + " =?";
