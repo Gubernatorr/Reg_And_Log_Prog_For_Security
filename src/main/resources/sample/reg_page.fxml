@@ -23,27 +23,27 @@
                 <Font name="Marlett" size="20.0" />
             </font>
         </Button>
-      <Text layoutX="679.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Window">
+      <Text layoutX="679.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Window">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="690.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account">
+      <Text layoutX="690.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="login_field" layoutX="588.0" layoutY="249.0" prefHeight="53.0" prefWidth="422.0" promptText="Login">
+      <TextField fx:id="login_field" layoutX="588.0" layoutY="209.0" prefHeight="53.0" prefWidth="422.0" promptText="Login">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="email_field" layoutX="588.0" layoutY="338.0" prefHeight="53.0" prefWidth="422.0" promptText="Email">
+      <TextField fx:id="email_field" layoutX="588.0" layoutY="298.0" prefHeight="53.0" prefWidth="422.0" promptText="Email">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="password_field" layoutX="588.0" layoutY="428.0" prefHeight="53.0" prefWidth="422.0" promptText="Password">
+      <TextField fx:id="password_field" layoutX="588.0" layoutY="388.0" prefHeight="53.0" prefWidth="422.0" promptText="Password">
          <font>
             <Font size="24.0" />
          </font>
@@ -53,37 +53,52 @@
             <Font name="Marlett" size="20.0" />
          </font>
       </Button>
-      <Text fx:id="password_check_text" layoutX="588.0" layoutY="501.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create strong password" wrappingWidth="422.4000000000001">
+      <Text fx:id="password_check_text" layoutX="588.0" layoutY="461.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create strong password" wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="email_check_text" layoutX="588.0" layoutY="411.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Input your email" wrappingWidth="422.4000000000001">
+      <Text fx:id="email_check_text" layoutX="588.0" layoutY="371.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Input your email" wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="login_check_text" layoutX="588.0" layoutY="322.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your login" wrappingWidth="422.4000000000001">
+      <Text fx:id="login_check_text" layoutX="588.0" layoutY="282.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your login" wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="password_length_text" layoutX="588.0" layoutY="535.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must be at least 8 characters long." wrappingWidth="422.4000000000001">
+      <Text fx:id="password_length_text" layoutX="588.0" layoutY="495.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must be at least 8 characters long." wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="password_upper_and_lower_check_text" layoutX="588.0" layoutY="562.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must include upper and lower case letters." wrappingWidth="422.4000000000001">
+      <Text fx:id="password_upper_and_lower_check_text" layoutX="588.0" layoutY="522.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must include upper and lower case letters." wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="password_number_check_text" layoutX="588.0" layoutY="589.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a number." wrappingWidth="422.4000000000001">
+      <Text fx:id="password_number_check_text" layoutX="588.0" layoutY="549.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a number." wrappingWidth="422.4000000000001">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="password_symbol_check_text" layoutX="588.0" layoutY="616.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a symbol (not a letter or a number)." wrappingWidth="422.4000000000001">
+      <Text fx:id="password_symbol_check_text" layoutX="588.0" layoutY="576.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="The password must contain a symbol (not a letter or a number)." wrappingWidth="422.4000000000001">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="captcha_check_field" layoutX="1103.0" layoutY="247.0" prefHeight="54.0" prefWidth="245.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Text fx:id="captcha_ckeck_text" layoutX="1103.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="245.5999999999999">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="captcha_check_answer_text" layoutX="1103.0" layoutY="235.0" opacity="0.43" strokeType="OUTSIDE" strokeWidth="0.0" text="Write here generated code" wrappingWidth="245.5999999999999">
          <font>
             <Font size="18.0" />
          </font>

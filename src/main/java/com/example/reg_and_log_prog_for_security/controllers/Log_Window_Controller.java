@@ -115,7 +115,6 @@ public class Log_Window_Controller {
 
         if (loginText != null && loginPassword != null) {
             if(!dbDispatcher.isUserLoginExists(login_field.getText())){
-
                 notSuchUserFoundWindow();
             } else if(dbDispatcher.isUserLoginExists(login_field.getText())){
                 User user_for_sec = dbDispatcher.getAllUserInfo(login_field.getText());

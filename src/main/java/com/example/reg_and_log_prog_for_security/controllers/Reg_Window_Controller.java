@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.example.reg_and_log_prog_for_security.animations.Shake;
@@ -62,6 +63,16 @@ public class Reg_Window_Controller {
 
     @FXML
     private Button goback_button;
+
+    @FXML
+    private TextField captcha_check_field;
+
+    @FXML
+    private Text captcha_ckeck_text;
+
+    @FXML
+    private Text captcha_check_answer_text;
+
     @FXML
     void goback_button_pressed(ActionEvent event) {
         goback_button.getScene().getWindow().hide();
@@ -85,6 +96,18 @@ public class Reg_Window_Controller {
         signUpNewUser();
     }
 
+    public static String generateCaptcha() {
+        Random random = new Random();
+        // Генеруємо випадковий код з цифр і букв
+        int length = random.nextInt(5) + 5;
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            code.append((char) (random.nextInt(10) + '0'));
+        }
+        return code.toString();
+    }
+
+    static String valid_code = "";
     private void signUpNewUser() throws SQLException, ClassNotFoundException {
         String password = password_field.getText();
         boolean isLengthValid = password.length() >= 8;
@@ -138,7 +161,14 @@ public class Reg_Window_Controller {
                 email_check_text.setFill(Color.RED);
                 email_check_text.setText("Email must ends with @gmail.com");
 
-            } else if(isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar){
+            } else if(!valid_code.equals(captcha_ckeck_text.getText())){
+
+                captcha_check_answer_text.setText("bad captcha my man");
+                captcha_check_answer_text.setFill(Color.RED);
+
+                captcha_ckeck_text.setText(generateCaptcha());
+
+            } else if(isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && captcha_check_field.getText().equals(captcha_ckeck_text.getText())){
 
                 login_check_text.setFill(Color.GREEN);
                 login_check_text.setText("Login is valid");
@@ -187,6 +217,7 @@ public class Reg_Window_Controller {
         password_upper_and_lower_check_text.setFill(Color.RED);
         password_number_check_text.setFill(Color.RED);
         password_symbol_check_text.setFill(Color.RED);
+        captcha_ckeck_text.setText(generateCaptcha());
 
         password_field.textProperty().addListener((observable, oldValue, newValue) -> {
             String password = password_field.getText();
@@ -223,6 +254,7 @@ public class Reg_Window_Controller {
             if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
                 password_check_text.setFill(Color.GREEN);
                 password_check_text.setText("Password is valid");
+
             } else {
                 password_check_text.setFill(Color.RED);
                 password_check_text.setText("Password is not valid");
@@ -236,6 +268,20 @@ public class Reg_Window_Controller {
             } else {
                 email_check_text.setFill(Color.RED);
                 email_check_text.setText("Email is not valid");
+            }
+        });
+
+        captcha_ckeck_text.setText(generateCaptcha());
+
+        captcha_check_field.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!captcha_check_field.getText().equals(captcha_ckeck_text.getText())) {
+                captcha_check_answer_text.setText("Wrong code, try again");
+                captcha_check_answer_text.setFill(Color.RED);
+
+            } else {
+                captcha_check_answer_text.setText("Correct code!");
+                captcha_check_answer_text.setFill(Color.GREEN);
+                valid_code = captcha_ckeck_text.getText();
             }
         });
     }
