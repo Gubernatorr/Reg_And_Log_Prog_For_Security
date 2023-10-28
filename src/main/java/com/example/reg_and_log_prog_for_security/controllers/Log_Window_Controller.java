@@ -28,6 +28,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import static com.example.reg_and_log_prog_for_security.controllers.Reg_Window_Controller.hashPassword;
+
 public class Log_Window_Controller {
 
     @FXML
@@ -100,15 +102,20 @@ public class Log_Window_Controller {
         if (failedLoginAttempts >= 3) {
             long currentTime = System.currentTimeMillis();
             if (blockedTime == 0) {
-                // Перший раз користувач заблокований, встановіть час блокування
                 blockedTime = currentTime + 15000; // 15 секунд блокування
             } else if (currentTime >= blockedTime) {
-                // За минуло 15 секунд, розблокувати користувача
+                // Після 15 секунд розблокувати користувача
                 failedLoginAttempts = 0;
                 blockedTime = 0;
             }
         }
         return failedLoginAttempts >= 3;
+    }
+
+    public static boolean verifyPassword(String enteredPassword, String hashedPassword) {
+        String enteredPasswordHash = hashPassword(enteredPassword);
+        assert enteredPasswordHash != null;
+        return enteredPasswordHash.equals(hashedPassword);
     }
     private void loginUser(String loginText, String loginPassword) throws SQLException, ClassNotFoundException {
         DatabaseDispatcher dbDispatcher = new DatabaseDispatcher();
@@ -118,7 +125,8 @@ public class Log_Window_Controller {
                 notSuchUserFoundWindow();
             } else if(dbDispatcher.isUserLoginExists(login_field.getText())){
                 User user_for_sec = dbDispatcher.getAllUserInfo(login_field.getText());
-                if(Objects.equals(user_for_sec.getPassword(), password_field.getText())){
+                //Objects.equals(user_for_sec.getPassword(), password_field.getText())
+                if(verifyPassword(password_field.getText(), user_for_sec.getPassword())){
                     // Успішний вхід, скинути лічильник невдалих спроб
                     failedLoginAttempts = 0;
                     blockedTime = 0;

@@ -2,10 +2,13 @@ package com.example.reg_and_log_prog_for_security.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import com.example.reg_and_log_prog_for_security.animations.Shake;
 import com.example.reg_and_log_prog_for_security.configs.DatabaseDispatcher;
@@ -106,7 +109,31 @@ public class Reg_Window_Controller {
         }
         return code.toString();
     }
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = md.digest(password.getBytes());
+            return truncateHash(bytesToHex(hashedBytes), 16); // Зменшуємо хеш до 16 символів
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(String.format("%02x", b));
+        }
+        return result.toString();
+    }
+
+    private static String truncateHash(String hash, int length) {
+        if (hash.length() < length) {
+            return hash;
+        }
+        return hash.substring(0, length);
+    }
     static String valid_code = "";
     private void signUpNewUser() throws SQLException, ClassNotFoundException {
         String password = password_field.getText();
@@ -179,7 +206,10 @@ public class Reg_Window_Controller {
 
                 inserted_user.setLogin(login_field.getText());
                 inserted_user.setEmail(email_field.getText());
-                inserted_user.setPassword(password_field.getText());
+                inserted_user.setPassword(hashPassword(password_field.getText()));
+
+                System.out.println(password_field.getText());
+                System.out.println(inserted_user.getPassword());
 
                 dbDispatcher.signUpUser(inserted_user);
 

@@ -103,5 +103,15 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <TextField fx:id="captcha_check_field1" layoutX="1104.0" layoutY="374.0" prefHeight="54.0" prefWidth="245.0" promptText="hello" text="hello">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Text fx:id="captcha_check_answer_text1" layoutX="1105.0" layoutY="460.0" opacity="0.43" strokeType="OUTSIDE" strokeWidth="0.0" text="Your secret word: hello" wrappingWidth="245.5999999999999">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
